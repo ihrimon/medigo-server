@@ -2,7 +2,6 @@ import mongoose from 'mongoose';
 import { IOrder } from './order.interface';
 import { Order } from './order.model';
 import { Product } from '../product/product.model';
-import { IJwtPayload } from '../user/user.interface';
 import { generateTransactionId } from '../../utils/generateTransactionId';
 import { Payment } from '../payment/payment.model';
 import { CustomError } from '../../utils/CustomError';
@@ -10,7 +9,7 @@ import { QueryBuilder } from '../../utils/QueryBuilder';
 
 const createOrderIntoDB = async (
   payload: Partial<IOrder>,
-  authUser: IJwtPayload
+  authUser: any
 ) => {
   const session = await mongoose.startSession();
   session.startTransaction();
@@ -101,7 +100,7 @@ const getOrderDetailsFromDB = async (orderId: string) => {
 
 const getMyOrdersFromDB = async (
   query: Record<string, unknown>,
-  authUser: IJwtPayload
+  authUser: any
 ) => {
   const orderQuery = new QueryBuilder(
     Order.find({ user: authUser.userId })

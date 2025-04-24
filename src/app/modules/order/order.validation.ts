@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { OrderStatus, PaymentMethod } from '../../constants';
+import { OrderStatus } from '../../constants';
 
 // billing info schema
 const billingInfoSchema = z.object({
@@ -31,7 +31,6 @@ export const createOrderSchema = z.object({
     billingInfo: billingInfoSchema,
     shippingInfo: shippingInfoSchema.optional(),
     transactionId: z.string().min(1, 'Transaction ID is required'),
-    paymentMethod: z.enum([...PaymentMethod] as [string, ...string[]]),
     status: z
       .enum([...OrderStatus] as [string, ...string[]])
       .default('Processing'),

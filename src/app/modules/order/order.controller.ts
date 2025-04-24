@@ -1,13 +1,12 @@
 import { Request, Response } from 'express';
 import { catchAsync } from '../../utils/catchAsync';
 import { orderServices } from './order.service';
-import { IJwtPayload } from '../user/user.interface';
 import { stripe } from '../../config';
 
 const createOrder = catchAsync(async (req: Request, res: Response) => {
   const result = await orderServices.createOrderIntoDB(
     req.body,
-    req.user as IJwtPayload
+    req.user
   );
 
   console.log(result);
@@ -42,7 +41,7 @@ const getOrderDetails = catchAsync(async (req: Request, res: Response) => {
 const getMyOrders = catchAsync(async (req: Request, res: Response) => {
   const result = await orderServices.getMyOrdersFromDB(
     req.query,
-    req.user as IJwtPayload
+    req.user
   );
 
   res.status(200).json({

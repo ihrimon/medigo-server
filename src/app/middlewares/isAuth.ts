@@ -2,7 +2,7 @@ import config from '../config';
 import { TUserRole } from '../interface';
 import { User } from '../modules/user/user.model';
 import { NextFunction, Request, Response } from 'express';
-import { JwtPayload, TokenExpiredError } from 'jsonwebtoken';
+import { TokenExpiredError } from 'jsonwebtoken';
 import { CustomError } from '../utils/CustomError';
 import { verifyToken } from '../utils/verifyToken';
 
@@ -27,7 +27,7 @@ const isAuth =
       const user = await User.findOne({ email });
       if (!user) throw new CustomError(404, 'User doesn"t exists!');
 
-      req.user = decoded as JwtPayload;
+      req.user = decoded;
 
       next();
     } catch (error) {
